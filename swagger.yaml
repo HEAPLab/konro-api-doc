@@ -39,8 +39,8 @@ paths:
         description: "Name of the application"
         required: true
         type: "string"
-      - in: "appname"
-        name: "appname"
+      - in: "binary_path"
+        name: "binary_path"
         description: "Path to the binary"
         required: true
         type: "string"
@@ -69,8 +69,22 @@ paths:
         format: "int64"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/Application"
         400:
           description: "Invalid ID supplied"
         404:
           description: "App not found"
+
+definitions:
+  Application:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+      binary_path:
+        type: "string"
