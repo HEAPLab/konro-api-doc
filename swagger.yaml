@@ -23,6 +23,8 @@ schemes:
 - "http"
 paths:
   /app/register:
+    tags:
+      - "app"
     post:
       summary: "Register a new application"
       description: ""
@@ -45,7 +47,13 @@ paths:
       responses:
         200:
           description: "Successful operation"
+        400:
+          description: "Invalid request."
+        503:
+          description: "No resources available."
   /app/{appId}/info:
+    tags:
+      - "app"
     get:
       summary: "Get information about an application"
       description: "Returns various information related to an application"
