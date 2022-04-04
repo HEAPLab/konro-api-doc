@@ -23,9 +23,9 @@ schemes:
 - "http"
 paths:
   /app/register:
-    tags:
-      - "app"
     post:
+      tags:
+        - "app"
       summary: "Register a new application"
       description: ""
       operationId: "register"
@@ -52,9 +52,9 @@ paths:
         503:
           description: "No resources available."
   /app/{appId}/info:
-    tags:
-      - "app"
     get:
+      tags:
+        - "app"
       summary: "Get information about an application"
       description: "Returns various information related to an application"
       operationId: "info"
