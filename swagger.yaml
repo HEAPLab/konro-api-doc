@@ -51,7 +51,7 @@ paths:
           description: "Invalid request."
         503:
           description: "No resources available."
-  /app/{appId}/info:
+  /app/{app_id}/info:
     get:
       tags:
         - "app"
@@ -61,8 +61,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "appId"
-        in: "path"
+      - name: "app_id"
+        in: "app_id"
         description: "ID of app to return"
         required: true
         type: "integer"
@@ -77,6 +77,41 @@ paths:
         404:
           description: "App not found"
 
+  /coord/get_nodes:
+    get:
+      tags:
+        - "coord"
+      summary: "Get information about nodes in the cluster"
+      description: "Returns all the nodes known by the host"
+      operationId: "get_nodes"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Node"
+  /coord/publish_nodes:
+    get:
+      tags:
+        - "coord"
+      summary: "Provide information about Konro nodes to the cluster"
+      description: ""
+      operationId: "publish_nodes"
+      produces:
+      - "application/json"
+      parameters:
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Node"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+
 definitions:
   Application:
     type: "object"
@@ -88,3 +123,18 @@ definitions:
         type: "string"
       binary_path:
         type: "string"
+  Node:
+    type: "object",
+    properties:
+      hostname: 
+        type: "string"
+      ipaddr: 
+        type: "string"
+      status:
+        type: "integer"
+        format: "int8"
+      last_seen:
+        type: "integer"
+        description: "UNIX timestamp"
+        format: "int64"
+      
