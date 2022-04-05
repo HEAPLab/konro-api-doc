@@ -34,12 +34,12 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - in: "appname"
+      - in: "query"
         name: "appname"
         description: "Name of the application"
         required: true
         type: "string"
-      - in: "binary_path"
+      - in: "query"
         name: "binary_path"
         description: "Path to the binary"
         required: true
@@ -62,7 +62,7 @@ paths:
       - "application/json"
       parameters:
       - name: "app_id"
-        in: "app_id"
+        in: "path"
         description: "ID of app to return"
         required: true
         type: "integer"
@@ -94,7 +94,7 @@ paths:
             items:
               $ref: "#/definitions/node"
   /coord/publish_nodes:
-    get:
+    post:
       tags:
         - "coord"
       summary: "Provide information about Konro nodes to the cluster"
@@ -102,11 +102,14 @@ paths:
       operationId: "publish_nodes"
       produces:
       - "application/json"
-      parameters:
-        schema:
-          type: "array"
-          items:
-            $ref: "#/definitions/node"
+      requestBody:
+        required: true
+        content:
+          application/json:
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/node"
       responses:
         200:
           description: "Successful operation"
