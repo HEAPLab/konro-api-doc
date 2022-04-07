@@ -106,10 +106,10 @@ paths:
         required: true
         content:
           application/json:
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/node"
+            schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/node"
       responses:
         200:
           description: "Successful operation"
