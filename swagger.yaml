@@ -1,5 +1,6 @@
 ---
 swagger: "3.0"
+openapi: 3.0.0
 info:
   description: "This is the API documentation of Konro HTTP interface"
   version: "1.0.0"
