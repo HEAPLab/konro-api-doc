@@ -1,144 +1,123 @@
 ---
-swagger: "3.0"
-openapi: 3.0.0
+openapi: 3.0.0        
 info:
-  description: "This is the API documentation of Konro HTTP interface"
-  version: "1.0.0"
-  title: "Konro API documentation"
-#  contact:
-#    email: "apiteam@swagger.io"
+  description: This is the API documentation of Konro HTTP interface
+  version: 1.0.0
+  title: Konro API documentation
   license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "localhost"
-basePath: "/"
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers
+  - url: http://localhost:7575/
 tags:
-- name: "app"
-  description: "Everything about integrated applications"
-- name: "rm"
-  description: "Everything about the resource manager"
-- name: "coord"
-  description: "Cross-Konro coordination in a distributed setup"
-schemes:
-- "https"
-- "http"
+  - name: app
+    description: Everything about integrated applications
+  - name: rm
+    description: Everything about the resource manager
+  - name: coord
+    description: Cross-Konro coordination in a distributed setup
 paths:
   /app/register:
     post:
       tags:
-        - "app"
-      summary: "Register a new application"
-      description: ""
-      operationId: "register"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - in: "query"
-        name: "appname"
-        description: "Name of the application"
-        required: true
-        type: "string"
-      - in: "query"
-        name: "binary_path"
-        description: "Path to the binary"
-        required: true
-        type: "string"
+        - app
+      summary: Register a new application
+      description: ''
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/application'
       responses:
-        200:
-          description: "Successful operation"
-        400:
-          description: "Invalid request."
-        503:
-          description: "No resources available."
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid request.
+        '503':
+          description: No resources available.
   /app/{app_id}/info:
     get:
       tags:
-        - "app"
-      summary: "Get information about an application"
-      description: "Returns various information related to an application"
-      operationId: "info"
-      produces:
-      - "application/json"
+        - app
+      summary: Get information about an application
+      description: Returns various information related to an application
+      operationId: info
       parameters:
-      - name: "app_id"
-        in: "path"
-        description: "ID of app to return"
-        required: true
-        type: "integer"
-        format: "int64"
-      responses:
-        200:
-          description: "Successful operation"
+        - name: app_id
+          in: path
+          description: ID of app to return
+          required: true
           schema:
-            $ref: "#/definitions/application"
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "App not found"
-
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/application'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: App not found
   /coord/get_nodes:
     get:
       tags:
-        - "coord"
-      summary: "Get information about nodes in the cluster"
-      description: "Returns all the nodes known by the host"
-      operationId: "get_nodes"
-      produces:
-      - "application/json"
+        - coord
+      summary: Get information about nodes in the cluster
+      description: Returns all the nodes known by the host
+      operationId: get_nodes
       responses:
-        200:
-          description: "Successful operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/node"
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/node'
   /coord/publish_nodes:
     post:
       tags:
-        - "coord"
-      summary: "Provide information about Konro nodes to the cluster"
-      description: ""
-      operationId: "publish_nodes"
-      produces:
-      - "application/json"
+        - coord
+      summary: Provide information about Konro nodes to the cluster
+      description: ''
+      operationId: publish_nodes
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: "array"
+              type: array
               items:
-                $ref: "#/definitions/node"
+                $ref: '#/components/schemas/node'
       responses:
-        200:
-          description: "Successful operation"
-          schema:
-
-definitions:
-  application:
-    type: "object"
-    properties:
-      id:
-        type: "integer"
-        format: "int32"
-      name:
-        type: "string"
-      binary_path:
-        type: "string"
-  node:
-    type: "object"
-    properties:
-      hostname: 
-        type: "string"
-      ipaddr: 
-        type: "string"
-      status:
-        type: "integer"
-        format: "int8"
-      last_seen:
-        type: "integer"
-        description: "UNIX timestamp"
-        format: "int64"
-      
+        '200':
+          description: Successful operation
+components:
+  schemas:
+    application:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        binary_path:
+          type: string
+    node:
+      type: object
+      properties:
+        hostname:
+          type: string
+        ipaddr:
+          type: string
+        status:
+          type: integer
+          format: int8
+        last_seen:
+          type: integer
+          description: UNIX timestamp                
