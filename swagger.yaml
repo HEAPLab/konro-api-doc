@@ -16,6 +16,8 @@ tags:
     description: Everything about the resource manager
   - name: coord
     description: Cross-Konro coordination in a distributed setup
+  - name: auth
+    description: Service commands for authentication
 paths:
   /app/register:
     post:
@@ -99,6 +101,34 @@ paths:
       responses:
         '200':
           description: Successful operation
+  /auth/get_challenge/{username}:
+    get:
+      tags:
+        - auth
+      summary: Get a challenge for authentication 
+      description: Given a username, the host returns an authentication challenge for the client 
+      operationId: get_challenge
+        - name: username
+          in: path
+          description: Username for the login
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  challenge:
+                    type: string
+                  expire_on:
+                    type: integer
+                    description: UNIX Timestamp
+        '404':
+          description: Username not found
 components:
   schemas:
     application:
