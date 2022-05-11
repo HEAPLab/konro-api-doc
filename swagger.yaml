@@ -24,6 +24,9 @@ paths:
       summary: Register a new application
       description: ''
       operationId: register
+      security:
+        - auth_id: []
+          auth_token: []
       requestBody:
         content:
           application/json:
@@ -121,3 +124,12 @@ components:
         last_seen:
           type: integer
           description: UNIX timestamp                
+  securitySchemes:
+    auth_token:
+      type: apiKey
+      in: cookie
+      name: AUTH_TOKEN
+    auth_id:
+      type: apiKey
+      in: cookie
+      name: AUTH_ID
